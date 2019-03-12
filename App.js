@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 
-import AppNavigator from 'app/routes';
+import AppNavigator from 'app/pages';
 import { AppContext, LoadingView } from 'app/components';
 
 export default class App extends React.Component {
