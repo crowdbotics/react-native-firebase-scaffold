@@ -1,0 +1,43 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true,
+    "react-native/react-native": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-native"],
+  "rules": {
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "max-len": [
+      "error",
+      100,
+      {
+        "ignoreUrls": true
+      }
+    ],
+    "no-unused-vars": ["warn"],
+    "no-console": ["off"],
+    "react/jsx-uses-vars": ["warn"],
+    "react/jsx-uses-react": ["warn"],
+    "react-native/no-unused-styles": ["warn"],
+    "react-native/split-platform-components": 2,
+    "react-native/no-inline-styles": 2,
+    "react-native/no-color-literals": ["off"],
+    "react-native/no-raw-text": ["off"],
+    "react/prop-types": [1],
+    "comma-dangle": "off"
+  }
+}
