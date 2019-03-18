@@ -16,5 +16,5 @@ A frontend scaffold for our next cross-platform React Native app.
  - Rename project with correct bundleId & packageName
  - Download GoogleService-Info.plist & googleservice.json in certain platform directories.
 
- ## Todo
- - Now This one has Android build issue.
+ ## Warning
+ - Please don't use `react-native link` on android build. Initial packages are already linked manually.
