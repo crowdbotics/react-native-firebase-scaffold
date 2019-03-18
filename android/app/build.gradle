@@ -154,16 +154,26 @@ android {
 }
 
 dependencies {
+  implementation 'com.android.support:multidex:1.0.3'
+  implementation 'com.android.support:design:27.1.0'
+
+  implementation project(':react-native-gesture-handler')
+  implementation project(':react-native-firebase')
+  implementation project(':react-native-fast-image')
+  implementation project(':react-native-vector-icons')
+
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation fileTree(dir: "libs", include: ["*.jar"])
+
+   implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
 
 /* ----------------------------
    *    REACT NATIVE FIREBASE
    * ---------------------------- */
 
   // Library as defined in settings.gradle
-  implementation project(path: ':react-native-firebase', configuration: 'default')
+  // implementation project(path: ':react-native-firebase', configuration: 'default')
   // Required dependencies
   //noinspection GradleCompatible
   implementation "com.google.firebase:firebase-core:16.0.6"
@@ -225,3 +235,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
