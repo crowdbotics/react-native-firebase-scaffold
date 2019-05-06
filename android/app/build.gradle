@@ -3,6 +3,7 @@ apply plugin: "com.google.firebase.firebase-perf"
 apply plugin: 'io.fabric'
 
 import com.android.build.OutputFile
+import com.google.gms.googleservices.GoogleServicesPlugin
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -96,17 +97,12 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-  lintOptions {
-    disable 'GradleCompatible'
-    disable 'InvalidPackage'
-  }
-
-  // because of firestore:
-  dexOptions {
-    javaMaxHeapSize "4g"
-  }
   compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+  }
 
   defaultConfig {
     applicationId "com.invertase.rnfirebasestarter"
@@ -114,36 +110,31 @@ android {
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
-    ndk {
-      abiFilters "armeabi-v7a", "x86"
-    }
-    // because of firestore:
     multiDexEnabled true
   }
+  
   splits {
     abi {
       reset()
       enable enableSeparateBuildPerCPUArchitecture
       universalApk false  // If true, also generate a universal APK
-      include "armeabi-v7a", "x86"
+      include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
     }
   }
-  buildTypes {
+
+   buildTypes {
     release {
-      minifyEnabled enableProguardInReleaseBuilds
-      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-    }
-    debug {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        minifyEnabled enableProguardInReleaseBuilds
+        proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
     }
   }
+
   // applicationVariants are e.g. debug, release
   applicationVariants.all { variant ->
     variant.outputs.each { output ->
       // For each separate APK per architecture, set a unique version code as described here:
       // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-      def versionCodes = ["armeabi-v7a": 1, "x86": 2]
+      def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3, "x86_64": 4]
       def abi = output.getFilter(OutputFile.ABI)
       if (abi != null) {  // null for the universal-debug, universal-release variants
         output.versionCodeOverride =
@@ -163,8 +154,8 @@ dependencies {
   implementation project(':react-native-vector-icons')
 
   //noinspection GradleDynamicVersion
-  implementation "com.facebook.react:react-native:+"
   implementation fileTree(dir: "libs", include: ["*.jar"])
+  implementation "com.facebook.react:react-native:+"
 
    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
 
@@ -176,8 +167,8 @@ dependencies {
   // implementation project(path: ':react-native-firebase', configuration: 'default')
   // Required dependencies
   //noinspection GradleCompatible
-  implementation "com.google.firebase:firebase-core:16.0.6"
-  implementation "com.google.android.gms:play-services-base:16.0.1"
+  implementation "com.google.firebase:firebase-core:16.0.8"
+  implementation "com.google.android.gms:play-services-base:16.1.0"
 
   /* -------------------------
    *   OPTIONAL FIREBASE SDKS
@@ -190,27 +181,27 @@ dependencies {
   }
 
   // Authentication
-  implementation "com.google.firebase:firebase-auth:16.1.0"
+  implementation "com.google.firebase:firebase-auth:16.2.1"
   // Analytics
-  implementation "com.google.firebase:firebase-analytics:16.0.6"
+  implementation "com.google.firebase:firebase-analytics:16.4.0"
   // Performance Monitoring
-  implementation "com.google.firebase:firebase-perf:16.2.3"
+  implementation "com.google.firebase:firebase-perf:16.2.5"
   // Remote Config
-  implementation "com.google.firebase:firebase-config:16.1.2"
+  implementation "com.google.firebase:firebase-config:16.5.0"
   // Cloud Storage
-  implementation "com.google.firebase:firebase-storage:16.0.5"
+  implementation "com.google.firebase:firebase-storage:16.1.0"
   // Invites
-  implementation "com.google.firebase:firebase-invites:16.0.6"
+  implementation "com.google.firebase:firebase-invites:16.1.1"
   // Dynamic Links
-  implementation "com.google.firebase:firebase-dynamic-links:16.1.5"
+  implementation "com.google.firebase:firebase-dynamic-links:16.1.8"
   // Real-time Database
-  implementation "com.google.firebase:firebase-database:16.0.5"
+  implementation "com.google.firebase:firebase-database:16.1.0"
   // Cloud Functions
-  implementation "com.google.firebase:firebase-functions:16.1.3"
+  implementation "com.google.firebase:firebase-functions:16.3.0"
   // Cloud Firestore
-  implementation "com.google.firebase:firebase-firestore:17.1.5"
+  implementation "com.google.firebase:firebase-firestore:18.2.0"
   // Cloud Messaging / FCM
-  implementation "com.google.firebase:firebase-messaging:17.3.4"
+  implementation "com.google.firebase:firebase-messaging:17.5.0"
   // Crashlytics
   implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
     transitive = true
@@ -235,5 +226,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply plugin: 'com.google.gms.google-services'
+GoogleServicesPlugin.config.disableVersionCheck = true
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

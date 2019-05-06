@@ -54,3 +54,11 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+
+# Pods
+ios/Pods
+
+# Android
+android/app/.settings/
+android/app/.classpath
+android/app/.project

@@ -1,6 +1,5 @@
 package com.invertase.rnfirebasestarter;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
@@ -40,10 +39,9 @@ public class MainApplication extends Application implements ReactApplication {
       return BuildConfig.DEBUG;
     }
 
-    @SuppressLint("MissingPermission")
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.asList(
+      return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
         new VectorIconsPackage(),
         new RNGestureHandlerPackage(),
