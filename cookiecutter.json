@@ -1,0 +1,5 @@
+{
+    "project_name": "",
+    "project_company": "crowdbotics",
+    "project_slug": "{{ cookiecutter.project_name|title|replace(' ', '')|replace('-', '') }}"
+}
